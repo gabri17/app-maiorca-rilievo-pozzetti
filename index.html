@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Generatore Excel - Rilievo Pozzetti</title>
     <!-- Tailwind CSS per lo styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -40,6 +40,7 @@
 
         .bottom-bar {
             box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
         }
 
         .toast {
@@ -65,7 +66,7 @@
         }
     </style>
 </head>
-<body class="h-screen w-full overflow-hidden flex justify-center bg-slate-100 text-slate-800">
+<body class="min-h-dvh h-dvh w-full overflow-hidden flex justify-center bg-slate-100 text-slate-800">
 
     <!-- Container principale, simula lo schermo di uno smartphone su desktop, full su mobile -->
     <div class="w-full max-w-md h-full bg-white relative shadow-xl overflow-hidden flex flex-col">
@@ -113,7 +114,7 @@
             </div>
 
             <!-- Footer (Pulsante Avanti) -->
-            <div class="p-4 shrink-0 bg-white border-t border-slate-100">
+            <div class="p-4 shrink-0 bg-white border-t border-slate-100 bottom-bar">
                 <button onclick="saveGeneralInfoAndGoNext()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-md transition-colors active:scale-95 text-lg">
                     Avanti
                 </button>
@@ -121,7 +122,7 @@
         </div>
 
         <!-- SCHERMATA 3: Inserimento Pozzetti -->
-        <div id="screen-3" class="screen h-full flex-col relative pb-24"> <!-- pb-24 per far spazio al bottone fixed -->
+        <div id="screen-3" class="screen h-full flex-col">
             <!-- Header -->
             <div class="bg-blue-600 text-white p-4 flex items-center shadow-md shrink-0">
                 <button onclick="goToScreen(2)" class="mr-4 p-2 rounded-full hover:bg-blue-700 active:bg-blue-800">
@@ -184,8 +185,8 @@
                 </div>
             </div>
 
-            <!-- Bottone Download Fixed in basso -->
-            <div class="absolute bottom-0 left-0 w-full p-4 bg-white bottom-bar">
+            <!-- Bottone Download -->
+            <div class="p-4 shrink-0 bg-white border-t border-slate-100 bottom-bar">
                 <button onclick="downloadExcel()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-xl shadow-lg transition-colors flex justify-center items-center active:scale-95 text-lg">
                     <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     Scarica Excel
