@@ -210,6 +210,33 @@
             pozzetti: []
         };
 
+        // Salva stato in localStorage
+        function saveState() {
+            localStorage.setItem('rilievoPozzetti', JSON.stringify(appState));
+        }
+
+        // Carica stato da localStorage
+        function loadState() {
+            const saved = localStorage.getItem('rilievoPozzetti');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                appState.location = parsed.location || "";
+                appState.collettori = parsed.collettori || "";
+                appState.pozzetti = parsed.pozzetti || [];
+                return true;
+            }
+            return false;
+        }
+
+        // Carica all'avvio
+        window.addEventListener('DOMContentLoaded', () => {
+            if (loadState()) {
+                document.getElementById('input-location').value = appState.location;
+                document.getElementById('input-collettori').value = appState.collettori;
+                renderListaPozzetti();
+            }
+        });
+
         // Utility: Gestione navigazione schermate
         function goToScreen(screenNumber) {
             // Nasconde tutte le schermate
@@ -243,6 +270,7 @@
 
             appState.location = locInput;
             appState.collettori = colInput;
+            saveState();
 
             // Aggiorna header schermata 3
             document.getElementById('header-subtitle').textContent = `${locInput} - Coll: ${colInput}`;
@@ -272,6 +300,7 @@
             // Aggiungi allo stato
             const nuovoPozzetto = { numero, valore: valore.toUpperCase(), note };
             appState.pozzetti.push(nuovoPozzetto);
+            saveState();
 
             // Aggiorna UI
             renderListaPozzetti();
@@ -336,6 +365,7 @@
         // Funzionalità extra per migliorare l'UX: rimuovi pozzetto
         function removePozzetto(index) {
             appState.pozzetti.splice(index, 1);
+            saveState();
             renderListaPozzetti();
             showToast("Pozzetto rimosso");
         }
